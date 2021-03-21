@@ -1,0 +1,501 @@
+
+
+<script id="user-info" type="text/x-handlebars-template">
+<div class="modal-content" style="height:100%; padding-bottom:100%;max-width:450px">
+  <div class="modal-header">
+  <button type="button" class="close">&times;</button>
+  </div>
+  <br/>
+  <br/>
+<style>
+.user-info-fields input[type=text],[type=password], select {
+  width: 100%;
+  padding: 5px 0px 5px 10px;
+  margin: 5px 5px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.user-info-fields label {
+  color:#f6d403;
+  margin-left: -10px;
+
+}
+
+.user-info-fields a {
+  color:#f6d403;
+}
+
+
+.user-info-fields .sticky {
+  position: sticky;
+  bottom: 45px;
+  background: #525252;
+  width: 100%;
+  text-align: left;
+
+}
+
+.user-info-fields div {
+  border-radius: 5px;
+  padding-left: 10px;
+}
+
+.user-info-fields button {
+  
+    height: 45px;
+    width: 80%;
+    margin-top: 15px;
+    margin-left:-10px;
+}
+
+</style>
+
+<div class="user-info-fields">
+<form action="">
+
+                <label for="username">Användarnamn:</label>
+                <input type="text"  id="username" value="{{username}}" {{#ifnoteq register true}} disabled {{/ifnoteq}}>
+            
+      
+
+                <label for="name">Namn:</label>
+                <input type="text"  id="name" value="{{name}}">
+ 
+      
+  
+                <label for="email">Email:</label>
+                <input type="text"  id="email" value="{{email}}">
+
+
+                <label for="phonenr">Telefon:</label>
+                <input type="text" id="phonenr" value="{{phonenr}}">
+ 
+              <br/>
+      
+     
+                <label for="password">Lösenord:</label>
+                <input type="password" id="password">
+         
+              
+                <label for="confirm-password">Verifiera Lösenord:</label>
+                <input type="password"  id="confirm-password">
+          
+              <div>
+              <input class="yellow-checkbox" type="checkbox" id="notify-me" name="notify-me" value="notify" style="margin-left: -25px;" {{#if sendremainder}} checked {{/if}} >
+              <label for="notify-me" style="margin-left: 5px;"> Påminn mig när det är min tur att spela</label>
+              </div>
+              {{#if register}}
+              <br/>
+              <div>
+              <input class="yellow-checkbox" type="checkbox" id="accept-terms" name="accept-terms" value="accept-terms" style="margin-left: -25px;">
+              <label for="accept-terms" style="margin-left: 5px;"> Jag godkänner <a onclick="showUserTerms()" href="javascript:void(0);">Användarvillkor och integritetspolicy</a></label>
+              </div>
+
+                   
+              {{/if}}
+
+
+              <div class="sticky">
+              {{#if register}}
+              <button type="button" id="reg-or-update" class="round-button">Skapa</button>
+              {{else}}
+              <button type="button" id="reg-or-update" class="round-button">Uppdatera</button>
+              {{/if}}
+              </div>
+            </form>
+
+</div>
+</script>
+
+
+<script id="login" type="text/x-handlebars-template">
+<div class="modal-content" style="" height:75%;max-width:450px">
+  <div class="modal-header">
+        <button type="button" class="close">&times;</button>
+  </div>
+<style>
+
+ .login-input-container {
+  display: -ms-flexbox; /* IE10 */
+  display: flex;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+ .login-icon {
+  padding: 10px;
+  background: #f6d403;
+  color: black;
+  min-width: 20px;
+  text-align: center;
+  border-radius: 15px 0 0 15px;
+}
+
+ .login-input-field {
+  width: 100%;
+  padding: 10px;
+  outline: none;
+  border-radius: 0 15px 15px 0;
+  border-style: none;
+}
+
+ .login-input-field:focus {
+  border: 2px solid dodgerblue;
+}
+
+/* Set a style for the submit button */
+.login-btn {
+  border-radius: 45px;
+    height: 45px;
+    width: 100%;
+    background: #f6d403;
+    color: black;
+    font-size: 14px;
+    font-weight: bold;
+    border-style: none;
+    cursor: pointer;
+}
+
+ .login-btn:hover {
+  opacity: 1;
+}
+</style>
+
+<form action="" style="max-width:500px;margin:auto">
+  <div class="login-input-container">
+    <i class="fa fa-user login-icon"></i>
+    <input id="username" class="login-input-field" type="text" placeholder="Användarnamn" name="Användarnamn">
+  </div>
+  
+  <div class="login-input-container">
+    <i class="fa fa-key login-icon"></i>
+    <input class="login-input-field" id="password" type="password" placeholder="Lösenord" name="password">
+  </div>
+
+  <button type="button" id="log-in" class="login-btn">Logga in</button>
+  <p><a id="forgot-password" href="javascript:void(0);" style="color:#f6d403">Glömt lösenord?</a></p>
+</form>
+
+</div>
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script id="forgot-password" type="text/x-handlebars-template">
+<div class="modal-content" style="width:50%; height:75%;;min-width:250px;max-width:450px">
+  <div class="modal-header">
+        <button type="button" class="close">&times;</button>
+  </div>
+<style>
+
+ .forgot-password div {
+  display: -ms-flexbox; /* IE10 */
+  display: flex;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+ .forgot-password i {
+  padding: 10px;
+  background: #f6d403;
+  color: black;
+  min-width: 20px;
+  text-align: center;
+  border-radius: 15px 0 0 15px;
+}
+
+ .forgot-password input[type=text] {
+  width: 100%;
+  padding: 5px 0px 5px 10px;
+  outline: none;
+  border-radius: 0 0 0 0;
+  border-style: none;
+}
+
+ 
+.forgot-password button {
+    border-radius:0 15px 15px 0;
+    height: 45px;
+    background: #f6d403;
+    color: black;
+    font-size: 14px;
+    font-weight: bold;
+    border-style: none;
+    cursor: pointer;
+}
+
+
+</style>
+<br/>
+<h2 style="color:#f6d403;">Glömt lösenord?</h2>
+<p style="color:#f6d403;">Ange användarnamn eller mail-adress så skickar vi en återställnings-länk!</p>
+
+<form action="" style="max-width:500px;margin:auto" class="forgot-password">
+  <div>
+    <i class="fa fa-user"></i>
+    <input id="userid" type="text" placeholder="Användarnamn" name="Användarnamn">
+    <button type="button" id="send-mail-for-userid" class="send-password">Skicka</button>
+  </div>
+  
+  <div>
+    <i class="fa fa-envelope"></i>
+    <input id="email" type="text" placeholder="Mailaddress" name="mail">
+    <button type="button" id="send-mail-for-mail-adr" class="send-password">Skicka</button>
+  </div>
+
+</form>
+
+</div>
+</script>
+
+
+<script id="reset-password" type="text/x-handlebars-template">
+<div class="modal-content" style="width:50%; height:100%; padding-bottom:100%;min-width:250px;max-width:450px">
+  <div class="modal-header">
+  <button type="button" class="close">&times;</button>
+  </div>
+  <br/>
+  <br/>
+<style>
+.user-info-fields input[type=text],[type=password], select {
+  width: 100%;
+  padding: 5px 0px 5px 10px;
+  margin: 5px 5px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.user-info-fields input[type=submit] {
+  width: 100%;
+  background-color: #f6d403;
+  color:  black;
+  padding: 14px 20px;
+  margin: 8px 0px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+
+.user-info-fields label {
+  color:#f6d403;
+  margin-left: -10px;
+
+}
+
+
+
+.user-info-fields input[type=button] {
+  border-radius: 45px;
+    height: 45px;
+    width: 80%;
+    background: #f6d403;
+    color: black;
+    font-size: 14px;
+    font-weight: bold;
+    border-style: none;
+    margin-top: 15px;
+    width:100%
+
+    
+}
+
+</style>
+
+<h2 style="color:white">Återställ lösenord!</h2>
+<div class="user-info-fields">
+<form action="">
+                <label for="password">Lösenord:</label>
+                <input type="password" id="password">
+
+                <label for="confirm-password">Verifiera Lösenord:</label>
+                <input type="password"  id="password2">
+
+                
+                <input type="button" id="reset-passw" value="Uppdatera"/>
+</form>
+</div>
+
+</div>
+
+</script>
+
+<script id="payment-mail-template" type="text/x-handlebars-template">
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+  border-collapse: collapse;
+}
+
+table, td, th {
+  border: 1px solid black;
+  text-align: center;
+  padding-left: 10px;
+  padding-right: 10px;
+
+}
+</style>
+</head>
+<body>
+ <p><b>Total summa:</b> {{toLocalNumber amount}} kr</p>
+ {{{tablebody}}}
+<br/>
+ Mvh
+ <br/>
+ Tipsy
+</body>
+</html>
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script id="user-terms" type="text/x-handlebars-template">
+<div class="modal-content" style="width:80%;">
+  <div class="modal-header">
+  <button type="button" class="close">&times;</button>
+  </div>
+  <br/>
+  <br/>
+<style>
+</style>
+
+
+<div style="overflow: auto;height:100%;">
+<h1>Användarvillkor</h1>
+
+<p>När du skapar ett användarkonto godkänner du i sin helhet de villkor som framgår nedan, vilka även inkluderar vår integritetspolicy. Tjänsterna tillhandahålls kostnadsfritt för dig i sitt standardutförande. </p>
+<p>Villkoren för tjänsterna som erbjuds via Tipsy är tillämpliga oavsett från vilken plattform tjänsterna tillhandahålls. Med tjänsterna avses de funktioner i på tipsy.nu och som tillgängliggörs för den som har ett användarkonto. Avtal om ingående av tjänsterna så som registrering får inte ingås av personer under 18 år. </p>
+<p>Tjänster hos Tipsy; åtkomst till gemensamma spel, realtiduppdateringar, prognoser och fastställd utdelning vid eventuell vinst. Därutöver funktioner som hanterar spelturordning, utgifter och intäkter, innestående medel och utbetalningar. Vänligen läs mer om tjänsterna under Kom igång.</p>
+<p>Ett spel som läggs hos Tipsy är inte ett giltigt spel som vid eventuell vinst ger pengar till tipparen. För att ett spel ska vara giltigt måste det spelas hos Svenska spel. Vid en eventuell vinst betalas inga pengar ut via Tipsy. Som kund kan du heller inte sätta in eller ta ut pengar från Tipsy. </p>
+<p>Du ansvarar för eventuella trafikavgifter som teleoperatören tar ut för skickande eller mottagande av data och/eller meddelanden vid registrering och vid användande av tjänsterna. </p>
+<p>Tipsy ger dig genom godkännande av användarvillkoren en begränsad, icke-exklusiv och icke överlåtbar rätt att använda tjänsterna därinom. Om du inte följer villkoren kan rätten komma att återkallas. Om villkoren mellan dig och Tipsy upphör, upphör din rätt att använda tipsy.nu.</p>
+Tipsy förbehåller sig även rätten att helt eller delvis och utan föregående meddelande, spärra tjänsterna för dig om vi misstänker att du; 
+<ul>
+  <li>obehörigen nyttjar annan persons inloggningsuppgifter;</li>
+  <li>obehörigen låter annan nyttja persons inloggningsuppgifter; </li>
+  <li>använder tjänsterna i strid mot användarvillkoren eller använder, eller har för avsikt att använda tjänsterna i strid med gällande lagstiftning (exempelvis bedrägerier, falska köp, falskt angivande av uppgifter eller liknande); eller</li>
+  <li>använder tjänsterna på sådant sätt att Tipsy eller tredje person kan orsakas skada.</li>
+</ul> 
+
+<p>Tipsy har också rätt att spärra tjänsterna för dig utifrån teknisk säkerhetsmässig grund eller annan grund om Tipsy bedömer att det bör ske för att tjänsten, tredje person eller andra parters intressen. </p>
+<p>Tipsy har rätt att utan föregående samtycke från dig, helt eller delvis, överlåta sina rättigheter och skyldigheter enligt användarvillkoren.</p>
+<p>Tipsy ger inga garantier om tjänsterna och dess innehåll eller funktion. Tipsy ansvarar inte heller under några omständigheter för tekniska problem som kan uppstå hos tredje part (Svenska spel) exempelvis i anledning av problem med internetåtkomst, tekniska problem hos betaltjänstleverantörer, tekniska problem med användarens mobila enhet eller liknande. Tipsy friskriver sig från samtliga uttryckliga, underförstådda eller lagstadgade garantier.  </p>
+<p>Tjänsterna är normalt tillgänglig dygnet runt alla dagar i veckan. Trots att Tipsy strävar efter att tillhandahålla dig tjänsterna utan teknisk störning, kan Tipsy inte garantera att tjänsterna alltid kommer att vara fullt tillgängliga eller fungera felfritt. Tipsy ansvarar inte heller under några omständigheter för tekniska problem som kan uppstå hos tredje part (Svenska spel), problem med internetåtkomst, tekniska problem med användarens mobila enhet eller liknande. Tipsy friskriver sig från samtliga uttryckliga, underförstådda eller lagstadgade garantier.  </p>
+<p>Samtliga immateriella rättigheter, som exempelvis tekniska lösningar avseende tjänsterna tillhörande Tipsy, får endast användas inom ramen för tjänsterna. Du har således inte rätt att förändra tjänsterna på något sätt, kopiera, anpassa, hyra ut, låna ut, sälja, underlicensiera eller på annat sätt distribuera eller överlåta innehållet i tjänsterna.  </p>
+
+<h1>Integritetspolicy</h1>
+<p>Tipsy är personuppgiftsansvarig för behandling av de personuppgifter som du lämnar till Tipsy i samband med registrering av konto. All behandling av personuppgifter sker enligt gällande lagstiftning. Detta innebär bland annat att vi skyddar dina personuppgifter med nödvändiga åtgärder och att du alltid har rätt att kontakta oss för att få reda på vilka personuppgifter som vi har sparade om dig. </p>
+<p>Tipsy behandlar de personuppgifter som lämnas till oss. Det kan vara namn, e-postadress, telefonnummer, spelstatistik, kostnader och intäkter som du lämnat till oss eller i övrigt är nödvändig för att vi ska kunna fullgöra våra åtaganden gentemot dig.</p>
+<p>Dina personuppgifter används endast av Tipsy. Vi vidarebefordrar, säljer eller byter aldrig dina personuppgifter för marknadsföringsändamål till tredje part utanför Tipsy. Och vi lämnar inte ut personuppgifter till andra bolag om vi inte behöver göra detta på grund av lag, förordning eller myndighetsbeslut eller för att skydda våra rättigheter eller tredje parts rättigheter.</p>
+<p>Begäran om registerutdrag, information eller rättning av felaktiga uppgifter skickas till:</p>
+<p>Kontakt: tipsy@gmail.com </p>
+<p>Tipsy.nu använder små textfiler, så kallade cookies, för att underlätta ditt surfande på sidan. Vi använder framförallt cookies för att samla in statistik om användarnas besök och för att förbättra upplevelsen. Det kan exempelvis handla om att val du gör på vår webbplats sparas. </p>
+
+<div><button type="button" class="round-button close-modal">Ok</button></div>
+<br/>
+<br/>
+<br/>
+
+</div>
+</div>
+
+</script>
+
+
+
+
+
+
+
+
+
+
+<script id="contact" type="text/x-handlebars-template">
+<div class="modal-content" style="width:50%;">
+  <div class="modal-header">
+  <button type="button" class="close">&times;</button>
+  </div>
+  <br/>
+  <br/>
+<style>
+</style>
+      <div class="contact"></div>
+      <br/>
+             <table class="" style="width:60%">
+             <tr>
+               <td style="width:32px"><img src="img/Mail-icon.png" alt="mail" ></td>
+               <td style="padding-left: 10px;"><a style="color:#f6d403;" href="mailto:tipsy.nu@gmail.com">tipsy.nu@gmail.com</a></td>
+             </tr>
+             <tr>
+               <td style="width:32px"><img src="img/icons8-instagram-48.png" alt="Instagram" ></td>
+               <td style="padding-left: 10px;"><a style="color:#f6d403;" href="https://instagram.com/tipsy.nu?igshid=1rxeis9l1zhil" target="_blank">@tipsy.nu</a> </td>
+             </tr>
+             <tr>
+               <td style="width:32px"><img src="img/icons8-facebook-48.png" alt="Facebook" ></td>
+               <td style="padding-left: 10px;"><a style="color:#f6d403;" href="https://www.facebook.com/pg/tipsy.nu/posts/" target="_blank">@tipsy.nu</a> </td>
+             </tr>
+             </table>
+             <br/>
+             <br/>
+
+
+
+          <button type="button" class="round-button close-modal" data-dismiss="modal">Ok</button>
+  
+  </div> 
+
+
+</script>
+
+
+
